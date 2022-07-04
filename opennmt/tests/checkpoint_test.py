@@ -1,6 +1,7 @@
 import os
 
 import tensorflow as tf
+import numpy as np
 
 from opennmt.utils import checkpoint as checkpoint_util
 
@@ -64,8 +65,7 @@ class CheckpointTest(tf.test.TestCase):
 
         # Write some checkpoint with all variables set to the step value.
         steps = [10, 20, 30, 40]
-        num_checkpoints = len(steps)
-        avg_value = sum(steps) / num_checkpoints
+        avg_value = np.mean(steps)
         directory = os.path.join(self.get_temp_dir(), "src")
         checkpoint = tf.train.Checkpoint(model=model, optimizer=optimizer)
         checkpoint_manager = tf.train.CheckpointManager(
